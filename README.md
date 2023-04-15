@@ -1,5 +1,14 @@
 # Getting Started with Create React App
 
+env  info :
+REACT_APP_LOCATIONKEY=pk.43301b87841c92376db8e188046b8660
+
+
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
