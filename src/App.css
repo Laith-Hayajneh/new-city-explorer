@@ -18,5 +18,11 @@ h1,h2{
 }
 img{
   margin-top: 30px;
-}
+  margin-left: 20%;
 
+}
+#cards,#movie{
+  align-items: center;
+  /* margin-left: 50%; */
+  display: inline-block;
+}

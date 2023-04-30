@@ -2,6 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import './App.css'
 import Weather from './components/Weather';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Movies from './components/Movies';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +17,8 @@ class App extends React.Component {
       lat: '',
       lon: '',
       weatherNew: [],
-      flag2: true
+      flag2: true,
+      moviesData:[]
 
     };
 
@@ -28,15 +32,16 @@ class App extends React.Component {
     await this.setState({
       searchedCity: e.target.city.value
     });
-    console.log('sdsdsdsd');
+    // console.log('sdsdsdsd');
     console.log(this.state.searchedCity);
 
     let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONKEY}&q=${this.state.searchedCity}&format=json`;
+    await this.getWeather();
+    await this.getMoviesHandler();
 
     try {
       let resData = await axios.get(url);
-      console.log('responws', resData.data);
-      await this.getWeather();
+      // console.log('responws', resData.data);
 
       this.setState({
         cityData: resData.data[0],
@@ -46,6 +51,7 @@ class App extends React.Component {
       this.setState({
         errorMessage: true
       })
+      console.log('error getting new data')
 
     }
 
@@ -56,22 +62,34 @@ class App extends React.Component {
 
     //the request from the server local
     //http://localhost:3001/weather?lat=31.95&lon=35.91&searchQuery=Amman
-    console.log('get weather', this.state.searchedCity);
-    let serverUrl = `http://localhost:3001/weather?searchQuery=${this.state.searchedCity}`;
+    // console.log('get weather', this.state.searchedCity);
+    let serverUrl = `http://localhost:3001/weather?city=${this.state.searchedCity}`;
 
     let resDataFromServer = await axios.get(serverUrl);
 
-    console.log('info from server', resDataFromServer);
+    // console.log('info from server', resDataFromServer);
    await  this.setState({
       flag2: false,
       weatherNew: resDataFromServer.data
     });
-    console.log(this.state.flag2, 'flageee');
-    console.log(this.state.weatherNew, 'this weather');
+    // console.log(this.state.flag2, 'flageee');
+    // console.log(this.state.weatherNew, 'this weather');
 
     // } catch (error) {
     //   console.log('cant recieve from server');
     // }
+
+
+  };
+
+  ///for movies
+  getMoviesHandler=async ()=>{
+    console.log('getting movies data from server');
+    let movieUrl = `http://localhost:3001/movie?city=${this.state.searchedCity}`;
+    let moviesDataFromServer=await axios.get(movieUrl)
+    await this.setState({
+      moviesData:moviesDataFromServer.data
+    })
 
 
   }
@@ -93,10 +111,11 @@ class App extends React.Component {
           <p>something error when getting informations</p>}
 
         {/* <p> { this.state.weatherNew}asdasd</p> */}
-        weather date:
+ 
         
         {/* <button onClick={this.getWeather}>weather</button> */}
-        <Weather data={this.state.weatherNew}/>
+        <Weather data={this.state.weatherNew} show={this.state.showMap}/>
+        <Movies data={this.state.moviesData}  show={this.state.showMap}/>
       </>
     )
   }
