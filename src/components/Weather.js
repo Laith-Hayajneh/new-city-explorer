@@ -13,7 +13,7 @@ class Weather extends React.Component {
         // console.log(this.props.data, 'w2232323');
         return (
             <div>
-                       <h2>weather date</h2>:
+                       <h2>weather data</h2>:
                 {this.props.show && this.props.data.data.map((item, index) => {
                     return <div id='cards' key={index}>
                         <Card style={{ width: '18rem' }}>

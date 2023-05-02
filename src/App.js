@@ -4,6 +4,7 @@ import './App.css'
 import Weather from './components/Weather';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Movies from './components/Movies';
+import Button from 'react-bootstrap/Button';
 
 class App extends React.Component {
   constructor(props) {
@@ -103,7 +104,7 @@ class App extends React.Component {
         <form onSubmit={this.getLocation} id='form1'>
           {/* <form onSubmit={()=>{this.getLocation();this.getWeather}} id='form1'> */}
           <input id='citName' type="text" placeholder='name of the city' name='city' />
-          <input type="submit" value='search city' />
+          <Button type="submit" value='search city' >search city</Button>
         </form>
 
         {this.state.showMap && <img id='' src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONKEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=15`} alt="" />}
@@ -115,6 +116,7 @@ class App extends React.Component {
         
         {/* <button onClick={this.getWeather}>weather</button> */}
         <Weather data={this.state.weatherNew} show={this.state.showMap}/>
+        <h2>Movies related to your search</h2>
         <Movies data={this.state.moviesData}  show={this.state.showMap}/>
       </>
     )
